@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="carbon.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@700&family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>GreenSync Central</title>
+  </head>
+
+  <body class="container">
+    <header class="firstrow greenbackground">
+      <img class="nav-logo" src="greenvibeslogo.png" alt="logo" width="100" />
+      <div class="hyperlinks">
+        <nav>
+          <a href="hello">Home</a>
+          <a href="hello">About</a>
+          <a href="./carbdeets.html" target="_blank">What</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="heading-container">
+      <h1 class="greenbackground">GreenSync Central</h1>
+      <p class="snippet">insert catchy line about carbon sustainability</p>
+    </div>
+
+    <div class="split-container">
+      <div class="form-section">
+        <form
+          id="carbonForm"
+          onsubmit="calculateCarbonFootprint(); return false;"
+        >
+          <label for="activityType">Type of Activity:</label>
+          <select id="activityType" name="activityType">
+            <option value="food">Food</option>
+            <option value="transportation">Transportation</option>
+          </select>
+
+          <label for="activity">Enter your activity:</label>
+          <input
+            type="text"
+            id="activity"
+            name="activity"
+            placeholder="e.g., walking, car, public transport, vegetables, meat, dairy, seafood"
+            required
+          />
+
+          <div id="distanceInput">
+            <label for="distance">Distance (km):</label>
+            <input
+              type="number"
+              id="distance"
+              name="distance"
+              placeholder="Enter distance in kilometers"
+              required
+            />
+          </div>
+
+          <div id="servingsInput">
+            <label for="servings">Servings:</label>
+            <input
+              type="number"
+              id="servings"
+              name="servings"
+              placeholder="Enter number of servings"
+            />
+          </div>
+
+          <button type="submit">Calculate Carbon Footprint</button>
+        </form>
+
+        <div class="output-section" id="outputSection" style="display: none">
+          <h2>Carbon Footprint Result:</h2>
+          <p id="carbonOutput"></p>
+        </div>
+      </div>
+
+      <div class="instructions-box">
+        <h2>Instructions:</h2>
+        <p>
+          Enter your activity and select the type of activity (Food or
+          Transportation). Provide the necessary details, such as distance (in
+          kilometers) for transportation or servings for food consumption. Click
+          "Calculate Carbon Footprint" to get your result.
+        </p>
+        <h3>Valid Inputs:</h3>
+        <ul>
+          <li><strong>Activity Types:</strong></li>
+          <li>Walking</li>
+          <li>Car</li>
+          <li>Public Transport</li>
+          <li><strong>Food Types:</strong></li>
+          <li>Vegetables</li>
+          <li>Meat</li>
+          <li>Dairy</li>
+          <li>Seafood</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      function calculateWalkingCarbonFootprint(distanceInKm) {
+        // Assuming an average of 50gCO2e per km for walking
+        var carbonIntensityWalking = 50; // gCO2e per km
+        return distanceInKm * carbonIntensityWalking;
+      }
+
+      function calculateCarCarbonFootprint(distanceInKm) {
+        // Example: Assuming an average of 2.31 kg CO2 per liter for gasoline
+        var carbonIntensityCar = 2.31; // kgCO2 per liter
+        // Assuming an average fuel efficiency of 10 km per liter
+        var fuelEfficiency = 10; // km per liter
+        return (distanceInKm / fuelEfficiency) * carbonIntensityCar * 1000; // Convert distance to liters
+      }
+
+      function calculatePublicTransportCarbonFootprint(distanceInKm) {
+        // Assuming an average of 70gCO2e per passenger-km for public transportation
+        var carbonIntensityPublicTransport = 70; // gCO2e per passenger-km
+        return distanceInKm * carbonIntensityPublicTransport;
+      }
+
+      function calculateFoodCarbonFootprint(foodType, servings) {
+        // Example: Assuming average carbon footprints for meat, dairy, seafood, and vegetables
+        var carbonIntensityMeat = 20; // gCO2e per 100 grams
+        var carbonIntensityDairy = 15; // gCO2e per 100 grams
+        var carbonIntensitySeafood = 25; // gCO2e per 100 grams
+        var carbonIntensityVegetables = 5; // gCO2e per 100 grams
+
+        // Assuming an average meal weight of 500 grams
+        var mealWeight = 500; // grams
+
+        switch (foodType.toLowerCase()) {
+          case "meat":
+            return servings * mealWeight * carbonIntensityMeat;
+          case "dairy":
+            return servings * mealWeight * carbonIntensityDairy;
+          case "seafood":
+            return servings * mealWeight * carbonIntensitySeafood;
+          case "vegetables":
+            return servings * mealWeight * carbonIntensityVegetables;
+          default:
+            return 0; // Default to 0 for unrecognized types
+        }
+      }
+
+      function calculateCarbonFootprint() {
+        var activity = document.getElementById("activity").value.toLowerCase();
+        var activityType = document
+          .getElementById("activityType")
+          .value.toLowerCase();
+
+        if (activityType === "food") {
+          var servingsInput = document.getElementById("servingsInput");
+          servingsInput.style.display = "block";
+
+          var servings = parseFloat(document.getElementById("servings").value);
+          var foodFootprint = calculateFoodCarbonFootprint(activity, servings);
+          displayOutput(
+            "Your carbon footprint for " +
+              activity +
+              " consumption is " +
+              (foodFootprint / 1000).toFixed(3) +
+              " kgCO2e."
+          );
+        } else if (activityType === "transportation") {
+          var distanceInput = document.getElementById("distanceInput");
+          distanceInput.style.display = "block";
+
+          var distance = parseFloat(document.getElementById("distance").value);
+
+          if (activity === "walking") {
+            var walkingFootprint = calculateWalkingCarbonFootprint(distance);
+            displayOutput(
+              "Your carbon footprint for " +
+                activity +
+                " is " +
+                (walkingFootprint / 1000).toFixed(3) +
+                " kgCO2e."
+            );
+          } else if (activity === "car") {
+            var carFootprint = calculateCarCarbonFootprint(distance);
+            displayOutput(
+              "Your carbon footprint for " +
+                activity +
+                " is " +
+                (carFootprint / 1000).toFixed(3) +
+                " kgCO2e."
+            );
+          } else if (activity === "public transport") {
+            var publicTransportFootprint =
+              calculatePublicTransportCarbonFootprint(distance);
+            displayOutput(
+              "Your carbon footprint for " +
+                activity +
+                " is " +
+                (publicTransportFootprint / 1000).toFixed(3) +
+                " kgCO2e."
+            );
+          } else {
+            displayOutput(
+              'Invalid activity for transportation. Please enter a valid activity such as "walking", "car", or "public transport".'
+            );
+          }
+        } else {
+          displayOutput(
+            'Invalid activity type. Please select a valid activity type ("food" or "transportation").'
+          );
+        }
+      }
+
+      function displayOutput(output) {
+        var outputSection = document.getElementById("outputSection");
+        var carbonOutput = document.getElementById("carbonOutput");
+
+        // Display the output section
+        outputSection.style.display = "block";
+
+        // Set the carbon footprint result
+        carbonOutput.textContent = output;
+      }
+    </script>
+  </body>
+</html>
