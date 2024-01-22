@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style/carbon.css">
-  <link rel="stylesheet" href="./style/carbdeets.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -20,51 +19,56 @@
     <div class="hyperlinks">
       <nav>
         <a href="/index.html">Home</a>
-        <a href="#">About</a>
-        <a href="./pages/carbdeets.html" target="_blank">What</a>
+        <a href="./pages/how-it-works.html">How it Works</a>
+        <a href="./pages/what-is-carbon-footprint.html">What is Carbon Footprint</a>
+      
       </nav>
     </div>
   </header>
 
-  <div class="heading-container">
-    <h1 class="greenbackground">GreenSync Central</h1>
-    <p class="snippet">Calculate your carbon footprint</p>
-  </div>
+  <div>
 
-  <div class="split-container">
-    <div class="form-section">
-      <form id="carbonForm" onsubmit="calculateCarbonFootprint(); return false;">
-        <label for="activityType">Type of Activity:</label>
-        <select id="activityType" name="activityType" required onchange="updateActivityOptions(this.value)">
-          <option value="" disabled selected>Select your option</option>
-          <option value="transportation">Transportation</option>
-          <option value="food">Food</option>
-        </select>
+    <div class="heading-container">
+      <h1 class="greenbackground">GreenSync Central</h1>
+      <p class="snippet">Calculate your carbon footprint</p>
+    </div>
 
-        <label for="activity">Enter your activity:</label>
-        <select id="activity" name="activity" required>
-          <!-- Options will be dynamically added based on the selection above -->
-        </select>
+    <div class="split-container">
+      <div class="form-section">
+        <form id="carbonForm" onsubmit="calculateCarbonFootprint(); return false;">
+          <label for="activityType">Type of Activity:</label>
+          <select id="activityType" name="activityType" required onchange="updateActivityOptions(this.value)">
+            <option value="" disabled selected>Select your option</option>
+            <option value="transportation">Transportation</option>
+            <option value="food">Food</option>
+          </select>
 
-        <div id="distanceInput" style="display: none;">
-          <label for="distance">Distance (km):</label>
-          <input type="number" id="distance" name="distance" placeholder="Enter distance in kilometers" />
+          <label for="activity">Enter your activity:</label>
+          <select id="activity" name="activity" required>
+            <!-- Options will be dynamically added based on the selection above -->
+          </select>
+
+          <div id="distanceInput" style="display: none;">
+            <label for="distance">Distance (km):</label>
+            <input type="number" id="distance" name="distance" placeholder="Enter distance in kilometers" />
+          </div>
+
+          <div id="servingsInput" style="display: none;">
+            <label for="servings">Servings:</label>
+            <input type="number" id="servings" name="servings" placeholder="Enter number of servings" />
+          </div>
+
+          <button type="submit">Calculate Carbon Footprint</button>
+        </form>
+
+        <div class="output-section" id="outputSection" style="display: none">
+          <h2>Carbon Footprint Result:</h2>
+          <p id="carbonOutput"></p>
         </div>
-
-        <div id="servingsInput" style="display: none;">
-          <label for="servings">Servings:</label>
-          <input type="number" id="servings" name="servings" placeholder="Enter number of servings" />
-        </div>
-
-        <button type="submit">Calculate Carbon Footprint</button>
-      </form>
-
-      <div class="output-section" id="outputSection" style="display: none">
-        <h2>Carbon Footprint Result:</h2>
-        <p id="carbonOutput"></p>
       </div>
     </div>
   </div>
+
 
 
   <footer>
