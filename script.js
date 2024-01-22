@@ -4,10 +4,9 @@ function calculateWalkingCarbonFootprint(distance) {
 }
 
 function calculateCarCarbonFootprint(distance) {
-  // Assuming 2.31 kg CO2 per liter and 10 km/l fuel efficiency
   const co2PerLiter = 2.31; // kg CO2 per liter of gasoline
   const fuelEfficiency = 10; // km per liter
-
+  console.log((distance / fuelEfficiency) * co2PerLiter)
   return (distance / fuelEfficiency) * co2PerLiter;
 }
 
@@ -34,7 +33,7 @@ function calculateCarbonFootprint() {
     var servings = parseFloat(document.getElementById("servings").value);
     var foodFootprint = calculateFoodCarbonFootprint(activity, servings);
     displayOutput(
-      "Your carbon footprint for " + activity + " consumption is " + (foodFootprint / 1000).toFixed(3) + " kgCO2e."
+      "Your carbon footprint for " + activity + " consumption is " + foodFootprint.toFixed(3) + " kgCO2e."
     );
   } else if (activityType === "transportation") {
     var distance = parseFloat(document.getElementById("distance").value);
@@ -42,17 +41,17 @@ function calculateCarbonFootprint() {
     if (activity === "walking") {
       var walkingFootprint = calculateWalkingCarbonFootprint(distance);
       displayOutput(
-        "Your carbon footprint for walking " + distance + " km is " + (walkingFootprint / 1000).toFixed(3) + " kgCO2e."
+        "Your carbon footprint for walking " + distance + " km is " + walkingFootprint.toFixed(3) + " kgCO2e."
       );
     } else if (activity === "car") {
       var carFootprint = calculateCarCarbonFootprint(distance);
       displayOutput(
-        "Your carbon footprint for driving a car for " + distance + " km is " + (carFootprint / 1000).toFixed(3) + " kgCO2e."
+        "Your carbon footprint for driving a car for " + distance + " km is " + carFootprint.toFixed(3) + " kgCO2e."
       );
     } else if (activity === "public transport") {
       var publicTransportFootprint = calculatePublicTransportCarbonFootprint(distance);
       displayOutput(
-        "Your carbon footprint for using public transport for " + distance + " km is " + (publicTransportFootprint / 1000).toFixed(3) + " kgCO2e."
+        "Your carbon footprint for using public transport for " + distance + " km is " + publicTransportFootprint.toFixed(3) + " kgCO2e."
       );
     } else {
       displayOutput('Invalid activity for transportation. Please enter a valid activity such as "walking", "car", or "public transport".');
@@ -61,6 +60,7 @@ function calculateCarbonFootprint() {
     displayOutput('Invalid activity type. Please select a valid activity type ("food" or "transportation").');
   }
 }
+
 
 
 function toggleInputFields(activityType) {
