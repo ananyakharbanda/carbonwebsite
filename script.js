@@ -20,7 +20,6 @@ function calculatePublicTransportCarbonFootprint(distance) {
 
 function calculateFoodCarbonFootprint(activity, servings) {
   // This function needs to be defined based on food type
-  // Placeholder function - replace with actual logic
   return servings * 1.5; // Placeholder value
 }
 
